@@ -1,0 +1,51 @@
+# Ascend environment snapshot: Linux aarch64, Python 3.12.
+# Based on https://github.com/SkyworkAI/SkyReels-V2/blob/main/requirements.txt
+# Versions read from the project's .venv on 2026-10-27.
+# Provision compatible CANN drivers/toolkit before installing Python packages.
+#
+# Installation (with the virtual environment activated):
+#   python -m pip install -r requirements-ascend.txt
+#   python -m pip install --no-deps triton-ascend==3.2.2 --extra-index-url=https://triton-ascend.osinfra.cn/pypi/simple
+#
+# triton-ascend==3.2.2 is deliberately installed separately: on Python <3.13
+# its metadata pins scipy==1.13.1; this environment uses scipy==1.15.3.
+# Its other base dependencies are listed below. Install community Triton first,
+# then the Ascend overlay; reapply that overlay if community Triton is reinstalled.
+# Standard CUDA flash_attn is omitted. This file records dependencies only;
+# it does not establish that the inference code has been fully ported to NPU.
+
+# Preserve the existing PyTorch / TorchNPU stack.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.7.1+cpu
+torch-npu==2.7.1.post10
+torchvision==0.22.1
+
+# Upstream direct dependencies, pinned to the installed environment.
+opencv-python==4.10.0.84
+diffusers==0.35.2
+transformers==4.49.0
+tokenizers==0.21.1
+accelerate==1.6.0
+tqdm==4.70.1
+imageio==2.37.4
+easydict==1.13
+ftfy==6.3.1
+dashscope==1.27.7
+imageio-ffmpeg==0.6.0
+numpy==1.26.4
+xfuser==0.7.0
+
+# NumPy-compatible SciPy override used by the working import chain.
+scipy==1.15.3
+
+# Triton-Ascend base dependencies; versions from this aarch64 environment.
+# The triton distribution metadata is 3.5.0; the Ascend overlay reports 3.2.0.
+triton==3.5.0
+attrs==24.2.0
+decorator==5.1.1
+psutil==6.0.0
+pytest==8.3.2
+pytest-xdist==3.6.1
+PyYAML==6.0.3
+pybind11==3.1.0
+pandas==3.0.6
